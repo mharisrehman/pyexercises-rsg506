@@ -1,5 +1,13 @@
 import arcpy
 arcpy.env.workspace = "Data/Exercise02"
-arcpy.Clip_analysis("soils.shp" , "basin.shp" , "Results/soil_clip.shp")
 
-arcpy.Select_analysis("Results/soil_clip", "soil.shp", " FARMLNDCL='Not prime farmland'")
+input_feature = "soils.shp"
+clip_feature = "basin.shp"
+clip_out="Results/soil_clip.shp"
+
+clip=arcpy.Clip_analysis(input_feature,clip_feature,clip_out)
+
+if clip_out is None: 
+    print("Clip Error")
+else:
+    select=arcpy.Select_analysis(clip_out, "soil.shp", " FARMLNDCL='Not prime farmland'")
